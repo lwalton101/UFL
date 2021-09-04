@@ -1,0 +1,11 @@
+﻿namespace UFL
+{
+	enum GamePhase
+	{
+		CONNECT_SCREEN,
+		WAITING_FOR_TWO,
+		WAITING_FOR_LINEUPS,
+		SELECT_PLAYERS,
+		GAME_VIEW
+	}
+}

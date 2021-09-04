@@ -1,0 +1,15 @@
+C:\Users\lukew\Documents\Projects\UFL\UFL\bin\Debug\netcoreapp3.1\UFL.exe
+C:\Users\lukew\Documents\Projects\UFL\UFL\bin\Debug\netcoreapp3.1\UFL.deps.json
+C:\Users\lukew\Documents\Projects\UFL\UFL\bin\Debug\netcoreapp3.1\UFL.runtimeconfig.json
+C:\Users\lukew\Documents\Projects\UFL\UFL\bin\Debug\netcoreapp3.1\UFL.runtimeconfig.dev.json
+C:\Users\lukew\Documents\Projects\UFL\UFL\bin\Debug\netcoreapp3.1\UFL.dll
+C:\Users\lukew\Documents\Projects\UFL\UFL\bin\Debug\netcoreapp3.1\UFL.pdb
+C:\Users\lukew\Documents\Projects\UFL\UFL\obj\Debug\netcoreapp3.1\UFL.csprojAssemblyReference.cache
+C:\Users\lukew\Documents\Projects\UFL\UFL\obj\Debug\netcoreapp3.1\UFL.AssemblyInfoInputs.cache
+C:\Users\lukew\Documents\Projects\UFL\UFL\obj\Debug\netcoreapp3.1\UFL.AssemblyInfo.cs
+C:\Users\lukew\Documents\Projects\UFL\UFL\obj\Debug\netcoreapp3.1\UFL.csproj.CoreCompileInputs.cache
+C:\Users\lukew\Documents\Projects\UFL\UFL\obj\Debug\netcoreapp3.1\UFL.dll
+C:\Users\lukew\Documents\Projects\UFL\UFL\obj\Debug\netcoreapp3.1\UFL.pdb
+C:\Users\lukew\Documents\Projects\UFL\UFL\obj\Debug\netcoreapp3.1\UFL.genruntimeconfig.cache
+C:\Users\lukew\Documents\Projects\UFL\UFL\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\lukew\Documents\Projects\UFL\UFL\obj\Debug\netcoreapp3.1\UFL.csproj.CopyComplete

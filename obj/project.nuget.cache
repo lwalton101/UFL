@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "idufyD4q2VanOeodvDj9Qncv/LgxFIrhBDSmupWLQN7IcYP+0GBDEpcEFwwd9ad1jOVQjKNCjDz8VXlFTMZ/dQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\lukew\\Documents\\Projects\\UFL\\UFL\\UFL.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\lukew\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
