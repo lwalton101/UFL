@@ -12,3 +12,10 @@ C:\Users\lukew\Documents\Projects\UFL\UFL\obj\Release\netcoreapp3.1\UFL.csproj.C
 C:\Users\lukew\Documents\Projects\UFL\UFL\obj\Release\netcoreapp3.1\UFL.dll
 C:\Users\lukew\Documents\Projects\UFL\UFL\obj\Release\netcoreapp3.1\UFL.pdb
 C:\Users\lukew\Documents\Projects\UFL\UFL\obj\Release\netcoreapp3.1\UFL.genruntimeconfig.cache
+C:\Users\lukew\Documents\Projects\UFL\UFL\Builds\netcoreapp3.1\UFL.exe
+C:\Users\lukew\Documents\Projects\UFL\UFL\Builds\netcoreapp3.1\UFL.deps.json
+C:\Users\lukew\Documents\Projects\UFL\UFL\Builds\netcoreapp3.1\UFL.runtimeconfig.json
+C:\Users\lukew\Documents\Projects\UFL\UFL\Builds\netcoreapp3.1\UFL.runtimeconfig.dev.json
+C:\Users\lukew\Documents\Projects\UFL\UFL\Builds\netcoreapp3.1\UFL.dll
+C:\Users\lukew\Documents\Projects\UFL\UFL\Builds\netcoreapp3.1\UFL.pdb
+C:\Users\lukew\Documents\Projects\UFL\UFL\Builds\netcoreapp3.1\Newtonsoft.Json.dll
