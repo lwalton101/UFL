@@ -23,31 +23,17 @@ namespace UFL
 
 			Server.Start();
 
-			CheckInput();
-
-			bool isTwoPlayers = WaitingForTwoPlayers();
-
-			while (!isTwoPlayers)
-			{
-				isTwoPlayers = WaitingForTwoPlayers();
-			}
-
-			bool hasLineups = CheckIfLineups();
-
-			while (!hasLineups)
-			{
-				hasLineups = CheckIfLineups();
-			}
-
+			OnTimedEvent(null, null);
 			System.Timers.Timer timer = new System.Timers.Timer(60000)
 			{
 				AutoReset = true
 			};
-			timer.Elapsed += new ElapsedEventHandler(ParseFixture);
+			timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
 			timer.Start();
 
 			CheckInput();
 		}
+		#region Public Methods
 		public static void MainThread()
 		{
 			//Console.WriteLine($"Main thread started. Running at {Constants.TICKS_PER_SEC} ticks per second");
@@ -73,8 +59,8 @@ namespace UFL
 			string input = Console.ReadLine();
 			switch (input)
 			{
-				case "Parse":
-					ParseFixture(null, null);
+				case "Update":
+					UpdateGameLogic();
 					break;
 				case "Help":
 					Console.WriteLine("UFL Version 0.1");
@@ -115,43 +101,58 @@ namespace UFL
 			}
 			CheckInput();
 		}
-		public static void ParseFixture(object sender, ElapsedEventArgs e)
+		public static void OnTimedEvent(object sender, ElapsedEventArgs e)
+		{
+			Console.BackgroundColor = ConsoleColor.Red;
+			Console.WriteLine("Last called: " + DateTime.Now);
+			Console.ResetColor();
+
+			
+
+		}
+		public static void UpdateGameLogic()
 		{
 			Console.WriteLine("I got called " + DateTime.Now);
-			//string json = APIGetter.GetJSON($"https://v3.football.api-sports.io/fixtures?id={Constants.MATCH_ID}", "x-apisports-key", APIGetter.ChooseKey()).Result;
-			string jsonString = File.ReadAllText(Constants.MINUTE + ".txt");
-			dynamic json = JToken.Parse(jsonString);
+			if(Server.NumberOfPlayers != 2)
+			{
+				Server.GamePhase = GamePhase.WAITING_FOR_TWO;
+				//TODO: send update packet
+			}
+
+			Fixture.jsonString = APIGetter.GetJSON($"https://v3.football.api-sports.io/fixtures?id={Constants.MATCH_ID}", "x-apisports-key", APIGetter.ChooseKey()).Result;
+			//string jsonString = File.ReadAllText(Constants.MINUTE + ".txt");
+			dynamic json = JToken.Parse(Fixture.jsonString);
 
 			Console.WriteLine(json.response[0].lineups[1].startXI[0].player.name);
 
 			if(json.response[0].lineups.ToString() == "[]")
 			{
-				// TODO: Say wait for lineups
+				Console.WriteLine("No Lineups");
 				return;
 			}
 
 			return;
 		}
-		public static bool CheckIfLineups()
+		public static GamePhase UpdateGamePhase()
 		{
 			string jsonString = APIGetter.GetJSON($"https://v3.football.api-sports.io/fixtures?id={Constants.MATCH_ID}", "x-apisports-key", APIGetter.ChooseKey()).Result;
 			dynamic json = JToken.Parse(jsonString);
 
-			if (json.response[0].lineups.ToString() == "[]")
+			if (Server.NumberOfPlayers != 2)
 			{
-				// TODO: Say wait for lineups
-				return false;
+				return GamePhase.WAITING_FOR_TWO;
 			}
-			return true;
-		}
-		public static bool WaitingForTwoPlayers()
-		{
-			if(Server.NumberOfPlayers == 2)
+			else if (json.response[0].lineups.ToString() == "[]")
 			{
-				return true;
+				return GamePhase.WAITING_FOR_LINEUPS;
 			}
-			return false;
+			else
+			{
+				return GamePhase.GAME_VIEW;
+			}
 		}
+		#endregion
+		#region Private Methods
 		private static void GetStatus()
 		{
 			int index = 0;
@@ -193,7 +194,16 @@ namespace UFL
 			}
 
 			Console.WriteLine(totalUsed + "/" + maxRequests);
-
+			Console.WriteLine("Number of players: " + Server.NumberOfPlayers);
+			foreach(Client client in Server.clients.Values)
+			{
+				if (client.tcp.socket != null) 
+				{ 
+					Console.WriteLine("");
+					Console.WriteLine("Player " + client.id);
+					Console.WriteLine("Username: " + client.Username);
+				}
+			}
 			CheckInput();
 		}
 		private static void TestParse()
@@ -206,6 +216,7 @@ namespace UFL
 			Console.WriteLine("Event 4: " + json.response[4].type);
 			Console.WriteLine("Event 4: " + json.response[4].detail);
 		}
+		#endregion
 
 	}
 }

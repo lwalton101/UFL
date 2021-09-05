@@ -11,6 +11,7 @@ namespace UFL
 		public static int MaxPlayers { get; private set; }
 		public static int Port { get; private set; }
 		public static int NumberOfPlayers { get; set; }
+		public static GamePhase GamePhase { get; set; }
 		public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
 		private static TcpListener tcpListener;
 
@@ -19,6 +20,7 @@ namespace UFL
 		public static void Start()
 		{
 			MaxPlayers = 2;
+			GamePhase = GamePhase.WAITING_FOR_TWO;
 			Console.Write("Port:");
 			string _portInput = Console.ReadLine();
 			if(_portInput == "")

@@ -8,7 +8,7 @@ namespace UFL
     public enum ServerPackets
     {
         welcome = 1,
-        
+        updateServerInfo
     }
 
     /// <summary>Sent from client to server.</summary>

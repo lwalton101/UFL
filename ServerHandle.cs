@@ -10,7 +10,7 @@ namespace UFL
 		{
 			int _clientIdCheck = _packet.ReadInt();
 			string _username = _packet.ReadString();
-
+			Server.clients[_fromClient].Username = _username;
 			Console.WriteLine($"{Server.clients[_fromClient].tcp.socket.Client.RemoteEndPoint} connected successfully and is now player {_fromClient} and is called {_username}");
 			if(_fromClient != _clientIdCheck)
 			{

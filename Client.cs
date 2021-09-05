@@ -8,7 +8,7 @@ namespace UFL
 		public static int dataBufferSize = 4096;
 
 		public int id;
-		public string Username { get; }
+		public string Username { get; set; }
 		public TCP tcp;
 
 		public Client(int _clientId)
@@ -32,6 +32,7 @@ namespace UFL
 
 			public void Connect(TcpClient _socket)
 			{
+				Server.GamePhase = Program.UpdateGamePhase();
 				socket = _socket;
 				socket.ReceiveBufferSize = dataBufferSize;
 				socket.SendBufferSize = dataBufferSize;

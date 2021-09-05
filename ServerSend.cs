@@ -43,5 +43,15 @@ namespace UFL
 				SendTCPData(_toClient, _packet);
 			}
 		}
+
+		public static void UpdateServerInfo()
+		{
+			using (Packet _packet = new Packet((int)ServerPackets.updateServerInfo))
+			{
+				_packet.Write(Server.NumberOfPlayers);
+				 
+			}
+
+		}
 	}
 }
