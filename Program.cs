@@ -119,8 +119,6 @@ namespace UFL
 			//string jsonString = File.ReadAllText(Constants.MINUTE + ".txt");
 			dynamic json = JToken.Parse(Fixture.jsonString);
 
-			Console.WriteLine(json.response[0].lineups[1].startXI[0].player.name);
-
 			if(json.response[0].lineups.ToString() == "[]")
 			{
 				Console.WriteLine("No Lineups");
