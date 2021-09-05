@@ -32,7 +32,6 @@ namespace UFL
 
 			public void Connect(TcpClient _socket)
 			{
-				Server.GamePhase = Program.UpdateGamePhase();
 				socket = _socket;
 				socket.ReceiveBufferSize = dataBufferSize;
 				socket.SendBufferSize = dataBufferSize;

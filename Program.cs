@@ -103,11 +103,6 @@ namespace UFL
 		}
 		public static void OnTimedEvent(object sender, ElapsedEventArgs e)
 		{
-			Console.BackgroundColor = ConsoleColor.Red;
-			Console.WriteLine("Last called: " + DateTime.Now);
-			Console.ResetColor();
-
-			
 
 		}
 		public static void UpdateGameLogic()
@@ -116,6 +111,7 @@ namespace UFL
 			if(Server.NumberOfPlayers != 2)
 			{
 				Server.GamePhase = GamePhase.WAITING_FOR_TWO;
+				Console.WriteLine("Waitin for 2");
 				//TODO: send update packet
 			}
 
@@ -132,24 +128,6 @@ namespace UFL
 			}
 
 			return;
-		}
-		public static GamePhase UpdateGamePhase()
-		{
-			string jsonString = APIGetter.GetJSON($"https://v3.football.api-sports.io/fixtures?id={Constants.MATCH_ID}", "x-apisports-key", APIGetter.ChooseKey()).Result;
-			dynamic json = JToken.Parse(jsonString);
-
-			if (Server.NumberOfPlayers != 2)
-			{
-				return GamePhase.WAITING_FOR_TWO;
-			}
-			else if (json.response[0].lineups.ToString() == "[]")
-			{
-				return GamePhase.WAITING_FOR_LINEUPS;
-			}
-			else
-			{
-				return GamePhase.GAME_VIEW;
-			}
 		}
 		#endregion
 		#region Private Methods
