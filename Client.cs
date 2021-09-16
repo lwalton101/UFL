@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Sockets;
+using UFL.Football;
 
 namespace UFL
 {
@@ -10,6 +11,8 @@ namespace UFL
 		public int id;
 		public string Username { get; set; }
 		public TCP tcp;
+		public Player chosen1;
+		public Player chosen2;
 
 		public Client(int _clientId)
 		{
@@ -142,6 +145,7 @@ namespace UFL
 			Console.WriteLine($"{tcp.socket.Client.RemoteEndPoint} has disconnected");
 			tcp.Disconnect();
 			Server.NumberOfPlayers--;
+			Program.UpdateGameLogic();
 		}
 	}
 

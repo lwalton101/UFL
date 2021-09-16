@@ -2,10 +2,12 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
+using System.Linq;
 using System.Timers;
 using System.Reflection;
 using System.Threading;
 using UFL.JSON;
+using UFL.Football;
 
 
 namespace UFL
@@ -20,6 +22,9 @@ namespace UFL
 
 			Thread mainThread = new Thread(new ThreadStart(MainThread));
 			mainThread.Start();
+
+			Fixture.team0.InitializePlayers();
+			Fixture.team1.InitializePlayers();
 
 			Server.Start();
 
@@ -103,28 +108,63 @@ namespace UFL
 		}
 		public static void OnTimedEvent(object sender, ElapsedEventArgs e)
 		{
-
+			UpdateGameLogic();
 		}
 		public static void UpdateGameLogic()
 		{
-			Console.WriteLine("I got called " + DateTime.Now);
+
 			if(Server.NumberOfPlayers != 2)
 			{
 				Server.GamePhase = GamePhase.WAITING_FOR_TWO;
-				Console.WriteLine("Waitin for 2");
-				//TODO: send update packet
+				Console.WriteLine("Waiting for two players");
+				ServerSend.UpdateServerInfo();
+				return;
 			}
 
-			Fixture.jsonString = APIGetter.GetJSON($"https://v3.football.api-sports.io/fixtures?id={Constants.MATCH_ID}", "x-apisports-key", APIGetter.ChooseKey()).Result;
-			//string jsonString = File.ReadAllText(Constants.MINUTE + ".txt");
+			//Fixture.jsonString = APIGetter.GetJSON($"https://v3.football.api-sports.io/fixtures?id={Constants.MATCH_ID}", "x-apisports-key", APIGetter.ChooseKey()).Result;
+		    Fixture.jsonString = File.ReadAllText(Constants.MINUTE + ".txt");
 			dynamic json = JToken.Parse(Fixture.jsonString);
 
 			if(json.response[0].lineups.ToString() == "[]")
 			{
+				Server.GamePhase = GamePhase.WAITING_FOR_LINEUPS;
 				Console.WriteLine("No Lineups");
+				ServerSend.UpdateServerInfo();
 				return;
 			}
+			Fixture.hasLineups = true;
 
+			Fixture.team0.id = int.Parse(json.response[0].teams.home.id.ToString());
+			Fixture.team0.name = json.response[0].teams.home.name.ToString();
+
+			Fixture.team1.name = json.response[0].teams.away.id.ToString();
+			Fixture.team1.id = int.Parse(json.response[0].teams.away.id.ToString());
+
+			for(int i = 0; i < 11; i++)
+			{
+				//adding player info
+				Fixture.team0.current11[i].id = int.Parse(json.response[0].lineups[0].startXI[i].player.id.ToString());
+				Fixture.team0.current11[i].name = json.response[0].lineups[0].startXI[i].player.name.ToString();
+				Fixture.team0.current11[i].number = int.Parse(json.response[0].lineups[0].startXI[i].player.number.ToString());
+				Fixture.team0.current11[i].pos = json.response[0].lineups[0].startXI[i].player.pos.ToString();
+
+				Fixture.team1.current11[i].id = int.Parse(json.response[0].lineups[1].startXI[i].player.id.ToString());
+				Fixture.team1.current11[i].name = json.response[0].lineups[1].startXI[i].player.name.ToString();
+				Fixture.team1.current11[i].number = int.Parse(json.response[0].lineups[1].startXI[i].player.number.ToString());
+				Fixture.team1.current11[i].pos = json.response[0].lineups[1].startXI[i].player.pos.ToString();
+
+				Console.WriteLine(Fixture.team0.current11[i].id + "/" + int.Parse(json.response[0].lineups[0].startXI[i].player.id.ToString()));
+			}
+
+			if (!Server.haveChosen)
+			{
+				Server.GamePhase = GamePhase.SELECT_PLAYERS;
+				Console.WriteLine("It is time to choose");
+				ServerSend.UpdateServerInfo();
+				return;
+			}
+			//TODO: Send select players screen
+			ServerSend.UpdateServerInfo();
 			return;
 		}
 		#endregion

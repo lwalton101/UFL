@@ -49,7 +49,8 @@ namespace UFL
 			using (Packet _packet = new Packet((int)ServerPackets.updateServerInfo))
 			{
 				_packet.Write(Server.NumberOfPlayers);
-				 
+				_packet.Write((int)Server.GamePhase);
+				SendTCPDataToAll(_packet);
 			}
 
 		}

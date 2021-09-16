@@ -12,6 +12,7 @@ namespace UFL
 		public static int Port { get; private set; }
 		public static int NumberOfPlayers { get; set; }
 		public static GamePhase GamePhase { get; set; }
+		public static bool haveChosen;
 		public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
 		private static TcpListener tcpListener;
 
@@ -60,11 +61,13 @@ namespace UFL
 				if(clients[i].tcp.socket == null)
 				{
 					clients[i].tcp.Connect(_client);
+					Program.UpdateGameLogic();
 					return;
 				}
 			}
 
 			Console.WriteLine($"{ _client.Client.RemoteEndPoint} failed  connect: Server Full");
+			
 		}
 		private static void InitializeServerData()
 		{
